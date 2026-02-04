@@ -14,6 +14,14 @@ library(tidyverse)
 post_meal_data <- read_csv2(here::here("data/post-meal-insulin.csv"))
 
 small_post_meal_data <- select(post_meal_data, id, Age, BMI, Group, auc_pg, auc_ins, glykemi)
+
+tidier_small_post_meal_data <- small_post_meal_data %>%
+  rename(
+    auc_glucose = auc_pg,
+    auc_insulin = auc_ins
+  ) %>%
+  filter(glykemi == 0) %>%
+  select(-glykemi)
 ```
 
 ## Writing R code
@@ -124,4 +132,44 @@ small_post_meal_data %>%
     auc_glucose = auc_pg,
     auc_insulin = auc_ins
   )
+```
+
+## Select and rename tasks
+
+```{r}
+select(post_meal_data, contains("OGTT"))
+```
+
+```{r}
+post_meal_data %>%
+  select(contains(".."), -contains("..."))
+```
+
+```{r}
+post_meal_data %>%
+  rename(
+    Glucose.minus5 = P.Glucose..5.OGTT,
+    Insulin.minus5 = Insulin..5.OGTT.X
+  )
+```
+
+```{r}
+basic_info <- select(post_meal_data, id, BMI, Length, Weight, Age) %>%
+  rename(Height = Length)
+```
+
+## Filtering data
+
+```{r}
+small_post_meal_data %>%
+  filter(glykemi == 1)
+
+small_post_meal_data %>%
+  filter(BMI >= 25)
+
+small_post_meal_data %>%
+  filter(Group == "CTR")
+
+small_post_meal_data %>%
+  filter(Group == "CTR" | BMI >= 25)
 ```
