@@ -4,6 +4,8 @@ Protocols teaching R
 
 # LearningR:
 
+Hi, I'm Clara
+
 TODO: Give a brief description of what your project is about
 
 This project...
