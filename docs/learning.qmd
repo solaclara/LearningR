@@ -7,6 +7,9 @@ format: html
 
 ```{r setup}
 library(tidyverse)
+
+post_meal_data <- read_csv2(here::here("data/post-meal-insulin.csv"))
+
 ```
 
 ## Writing R code
@@ -31,3 +34,12 @@ Currently doing a **PhD** on *female health, exercise and T1D*
 ## Testing for Git
 
 Its very cold
+
+## Showing the data
+
+```{r}
+post_meal_data
+
+glimpse(post_meal_data)
+```
+
