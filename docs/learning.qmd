@@ -74,3 +74,17 @@ ggplot(post_meal_data, aes(x = Group, fill = as.character(glykemi))) +
   geom_bar( position = position_dodge())
 ```
 
+## Side by side plots 
+
+```{r fig-bmi-glycemia}
+#| fig-cap: "BMI and glycemia, side by side"
+#| fig-subcap: 
+#|     - "Distribution of BMI."
+#|     - "Number of those with glycemia"
+#| layout-ncol: 2
+ggplot(post_meal_data, aes (x = BMI)) + 
+  geom_histogram()
+ggplot(post_meal_data, aes(x = glykemi)) + 
+  geom_bar()
+```
+
