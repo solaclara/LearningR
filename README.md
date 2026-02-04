@@ -4,7 +4,7 @@ Protocols teaching R
 
 # LearningR:
 
-Hi, I'm Clara
+Hola Hola (pull)
 
 TODO: Give a brief description of what your project is about
 
