@@ -22,6 +22,12 @@ tidier_small_post_meal_data <- small_post_meal_data %>%
   ) %>%
   filter(glykemi == 0) %>%
   select(-glykemi)
+
+tidied_post_meal_data <- tidier_small_post_meal_data %>%
+  mutate(
+    insulin_glucose_ratio = auc_insulin / auc_glucose,
+    Group = if_else(Group == "CTR", "Control", "First degree relative")
+  )
 ```
 
 ## Writing R code
@@ -153,10 +159,7 @@ post_meal_data %>%
   )
 ```
 
-```{r}
-basic_info <- select(post_meal_data, id, BMI, Length, Weight, Age) %>%
-  rename(Height = Length)
-```
+
 
 ## Filtering data
 
@@ -172,4 +175,17 @@ small_post_meal_data %>%
 
 small_post_meal_data %>%
   filter(Group == "CTR" | BMI >= 25)
+```
+
+## Modifying data 
+
+```{r}
+tidier_small_post_meal_data %>%
+  mutate(insulin_glucose_ratio = auc_insulin / auc_glucose)
+
+tidier_small_post_meal_data %>%
+  mutate(
+    insulin_glucose_ratio = auc_insulin / auc_glucose,
+    Group = if_else(Group == "CTR", "Control", "First degree relative")
+  )
 ```
