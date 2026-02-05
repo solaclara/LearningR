@@ -281,11 +281,16 @@ tidied_post_meal_data %>%
 ## Summarise with group by
 
 ```{r}
+#| label: tbl-mean-age-bmi
+#| tbl-cap: "Mean values of Age and BMI for each group"
+
 tidied_post_meal_data %>%
   group_by(Group) %>%
   summarise(
-    mean_age = mean(Age),
-    mean_bmi = mean(BMI)
+    "Mean Age (yrs)" = round (mean(Age) , 1),
+    "Mean BMI (kg/m^2^)" = round (mean(BMI) , 1) 
   ) %>%
-  ungroup()
+  ungroup() %>% 
+  knitr::kable()
+
 ```
