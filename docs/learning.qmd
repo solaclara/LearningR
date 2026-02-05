@@ -189,3 +189,42 @@ tidier_small_post_meal_data %>%
     Group = if_else(Group == "CTR", "Control", "First degree relative")
   )
 ```
+
+## Practice with filter and mutate
+
+```{r}
+post_meal_data %>%
+  filter(BMI >= 25 & BMI <= 40 & Group == "FDR")
+```
+```{r}
+post_meal_data %>%
+  mutate(
+    percent_body_fat = (Fat.mass.DXA / Weight) * 100
+  ) %>%
+  filter(percent_body_fat > 30)
+```
+
+## Visualizing with a jitter plot
+
+```{r}
+tidied_post_meal_data %>%
+  mutate(overweight = ifelse(BMI >= 25, "Overweight", "Not overweight")) %>%
+  ggplot(aes(x = overweight, y = insulin_glucose_ratio)) +
+  geom_jitter()
+```
+
+## Plotting three or more variables 
+
+
+```{r}
+tidied_post_meal_data %>%
+  filter(BMI < 30) %>%
+  mutate(young = if_else(Age < 40, "Young", "Old")) %>%
+  ggplot(aes(x = BMI, y = insulin_glucose_ratio, colour = Group)) +
+  geom_point() +
+  facet_grid(rows = vars(young)) +
+  labs(
+    x = "Body Mass Index (BMI)",
+    y = "Insulin to glucose ratio"
+  )
+```
