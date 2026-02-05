@@ -228,3 +228,64 @@ tidied_post_meal_data %>%
     y = "Insulin to glucose ratio"
   )
 ```
+
+## Make multi-dimensional plots 
+
+```{r}
+#| label: fig-multidimensional
+#| fig-cap: "Two, mult-dimensional plots of our data."
+#| fig-subcap:
+#|  - "Distribution of percent body fat by group and age category."
+#|  - "Relationship between BMI and bone mineral density, split by insulin sensitivity."
+#|layout-ncol: 2
+
+# Task 1.
+post_meal_data %>%
+  mutate(
+    percent_body_fat = (Fat.mass.DXA / Weight) * 100,
+    young = if_else(Age < 40, "Young", "Old")
+  ) %>%
+  ggplot(aes(x = Group, y = percent_body_fat, colour = young)) +
+  geom_jitter(width = 0.2)
+```
+
+```{r}
+#| label: fig-multidimensional2
+#| fig-cap: "Two, mult-dimensional plots of our data."
+#| fig-subcap:
+#|  - "Distribution of percent body fat by group and age category."
+#|  - "Relationship between BMI and bone mineral density, split by insulin sensitivity."
+#|layout-ncol: 2
+
+post_meal_data %>%
+  mutate(
+    insulin_glucose_ratio = (auc_ins / auc_pg),
+    insulin_insensitive = if_else(insulin_glucose_ratio > mean(insulin_glucose_ratio), "Insensitive", "Sensitive")
+  ) %>%
+  ggplot(aes(x = BMI, y = Bone.mineral.DXA, colour = insulin_insensitive)) +
+  geom_point() +
+  geom_smooth() +
+  facet_grid(cols = vars(insulin_insensitive))
+```
+
+
+## Calculating summary statistics
+
+```{r}
+tidied_post_meal_data %>%
+  summarise(
+    max_bmi = max(BMI),
+    min_bmi = min(BMI)
+  )
+```
+## Summarise with group by
+
+```{r}
+tidied_post_meal_data %>%
+  group_by(Group) %>%
+  summarise(
+    mean_age = mean(Age),
+    mean_bmi = mean(BMI)
+  ) %>%
+  ungroup()
+```
